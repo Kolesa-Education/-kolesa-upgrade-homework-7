@@ -112,12 +112,12 @@ func main() {
 	} else if input == "2" {
 
 		scanner.Scan()
-		fs := token.NewFileSet()
-		tv, err := types.Eval(fs, nil, token.NoPos, scanner.Text())
+		file_set := token.NewFileSet()
+		eval_res, err := types.Eval(file_set, nil, token.NoPos, scanner.Text())
 		if err != nil {
 			println("ты делаешь то чего делать не надо! подумай над этим")
 		}
-		println("Ответ:", tv.Value.String())
+		println("Ответ:", eval_res.Value.String())
 	} else {
 		println("Вы ввели что-то иное нежели 1 или 2. Такое моя не понимай!")
 	}
