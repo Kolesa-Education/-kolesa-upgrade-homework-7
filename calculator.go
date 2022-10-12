@@ -21,22 +21,18 @@ func main() {
 
 	case "+":
 		fmt.Println(number1, operator, number2, "=", number1+number2)
-		// fmt.Printf("%.1f %s %.1f = %.1f", number1, operator, number2, number1+number2)
 
 	case "-":
 		fmt.Println(number1, operator, number2, "=", number1-number2)
-		// fmt.Printf("%.1f %s %.1f = %.1f", number1, operator, number2, number1-number2)
 
 	case "*":
 		fmt.Println(number1, operator, number2, "=", number1*number2)
-		// fmt.Printf("%.1f %s %.1f = %.1f", number1, operator, number2, number1*number2)
 
 	case "/":
 		if number2 == 0.0 {
 			fmt.Println("Can not divide by 0")
 		} else {
 			fmt.Println(number1, operator, number2, "=", number1/number2)
-			// fmt.Printf("%.1f %s %.1f = %.1f", number1, operator, number2, number1/number2)
 		}
 
 	default:
