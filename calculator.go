@@ -14,7 +14,7 @@ func main() {
 	fmt.Print("Enter the second number : ")
 	fmt.Scanln(&number2)
 
-	fmt.Print("Enter the Operator (+ - * /) : ")
+	fmt.Print("Enter the Operator (+ - * / > < =) : ")
 	fmt.Scanln(&operator)
 
 	switch operator {
@@ -33,6 +33,27 @@ func main() {
 			fmt.Println("Can not divide by 0")
 		} else {
 			fmt.Println(number1, operator, number2, "=", number1/number2)
+		}
+
+	case ">":
+		if number1 < number2 {
+			fmt.Println("False, ", number1, "<", number2)
+		} else {
+			fmt.Println("True, ", number1, ">", number2)
+		}
+	case "<":
+		if number1 > number2 {
+			fmt.Println("False, ", number1, ">", number2)
+		} else {
+			fmt.Println("True, ", number1, "<", number2)
+		}
+
+	case "=":
+		if number1 == number2 {
+			fmt.Println("True, ", number1, "=", number2)
+		} else {
+			fmt.Println("False, ", number1, "≠", number2)
+
 		}
 
 	default:
