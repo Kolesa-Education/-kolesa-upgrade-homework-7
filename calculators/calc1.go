@@ -1,4 +1,4 @@
-package main
+package calculators
 
 import (
 	"errors"
@@ -15,7 +15,7 @@ func Divide(num1, num2 float64) (float64, error) {
 	return num1 / num2, nil
 }
 
-func main() {
+func Calc1(text string) {
 	var num1, num2 float64
 	var operator string
 
@@ -29,7 +29,6 @@ func main() {
 	fmt.Scanln(&num2)
 
 	result := 0.0
-	//error := ""
 	switch operator {
 	case "+":
 		result = num1 + num2

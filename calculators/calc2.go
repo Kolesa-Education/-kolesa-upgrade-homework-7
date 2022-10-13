@@ -1,9 +1,6 @@
-package main
+package calculators
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
 type tokenType int
 
@@ -40,27 +37,13 @@ func newScanner(exp string) *scanner {
 	}
 }
 
-var ErrDivideByZero = errors.New("divide by zero")
+type DivZero struct{}
 
-func Divide(exp string) (string, error) {
-	if exp == slash {
-		return 0, ErrDivideByZero
-	}
-	return a / b, nil
+func (myerr *DivZero) Error() string {
+	return "Cannot divide by 0!"
 }
 
-func main() {
-	fmt.Println("Enter expression you want to calculate")
-	result, err := Divide(a, b)
-	if err != nil {
-		switch {
-		case errors.Is(err, ErrDivideByZero):
-			fmt.Println("divide by zero error")
-		default:
-			fmt.Printf("unexpected division error: %s\n", err)
-		}
-		return
-	}
+func Calc2(text string) {
 
-	fmt.Printf("%d / %d = %d\n", a, b, result)
+	fmt.Println("Enter expression you want to calculate")
 }
