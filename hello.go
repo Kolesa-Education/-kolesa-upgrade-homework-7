@@ -41,7 +41,10 @@ func main() {
 			fmt.Println(a % b)
 		case "**":
 			fmt.Println(math.Pow(float64(a), float64(b)))
+		default:
+			fmt.Println("не правильный оператор")
 		}
+
 	}
 	printStats(mem)
 }
