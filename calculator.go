@@ -28,7 +28,6 @@ func (c Calculator) Divide(){
 	} else{
 		fmt.Println(c.Num1/c.Num2)
 	}
-	
 }
 
 func (c Calculator) Degree(){
