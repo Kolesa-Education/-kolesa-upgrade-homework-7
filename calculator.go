@@ -7,7 +7,7 @@ import (
 )
 
 type Calculator struct{
-	Num1, Num2 int
+	Num1, Num2 float64
 }
 
 func (c Calculator) Plus(){
@@ -23,16 +23,16 @@ func (c Calculator) Multiply(){
 }
 
 func (c Calculator) Divide(){
-	defer func() {
-		if r := recover(); r != nil{
-			fmt.Println(r)
-		}
-	}()
-	fmt.Println(c.Num1/c.Num2)
+	if c.Num2==0{
+		fmt.Println("runtime error: integer divide by zero")
+	} else{
+		fmt.Println(c.Num1/c.Num2)
+	}
+	
 }
 
 func (c Calculator) Degree(){
-	fmt.Println(math.Pow(float64(c.Num1), float64(c.Num2)))
+	fmt.Println(math.Pow(c.Num1, c.Num2))
 }
 
 func (c Calculator) Comparison(){
@@ -46,7 +46,7 @@ func (c Calculator) Comparison(){
 }
 
 func (c Calculator) Percent(){
-	fmt.Println(float64(c.Num1)/float64(c.Num2)*100)
+	fmt.Println(c.Num1/c.Num2*100)
 }
 
 func main(){
@@ -57,8 +57,8 @@ func main(){
 	fmt.Scan(&c)
 	fmt.Print("num2 = ")
 	fmt.Scan(&b)
-	num1, err1 := strconv.Atoi(a)
-	num2, err2 := strconv.Atoi(b)
+	num1, err1 := strconv.ParseFloat(a, 64)
+	num2, err2 := strconv.ParseFloat(b, 64)
 	if err1 == nil && err2 == nil{ 
 		numbers := Calculator{Num1 : num1, Num2 : num2,}
 		switch c{
