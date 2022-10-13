@@ -15,7 +15,6 @@ func Calc_v1(text string) {
 	res := strings.Split(text, " ")
 
 	if len(res) != 3 {
-		println(text)
 		println("неправильное выражение")
 		return
 	}
