@@ -43,6 +43,8 @@ func calc(a float64, b float64, op string) (float64, error) {
 		return a / b, nil
 	case "multiply", "*":
 		return a * b, nil
+	case "pow", "**":
+		return math.Pow(a, b), nil
 	case "sqrt", "√":
 		return math.Sqrt(a), nil
 	default:
