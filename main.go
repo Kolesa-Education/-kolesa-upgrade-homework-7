@@ -2,32 +2,26 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"os"
 	"strconv"
 )
 
 func main() {
-	x, o, y := 0, "", 0
-	counter := 0
-loop:
-	for {
-		counter++
-		fmt.Println(counter)
-		fmt.Println("введите задачу в одну строку")
-		fmt.Println("пример:")
-		fmt.Println("2 + 5")
-		task := ""
-		n, err := fmt.Scanf("%d %s %d", &x, &o, &y)
-		if err != nil || n != 3 {
-			continue
-		}
-		task = strconv.Itoa(x) + o + strconv.Itoa(y)
-		re := regexp.MustCompile(`\d+\s*(\+|-|\*|\/|%)\s*\d+`)
-		fmt.Printf("------------------\ntask: %s\n------------------\n", task)
-		match := re.Match([]byte(task))
-		if match {
-			break
-		}
+	if len(os.Args) != 4 {
+		fmt.Println("неправильный ввод\nпример:\n2 + 5")
+		return
+	}
+	x, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		fmt.Println("неправильный ввод\nпример:\n2 + 5")
+		return
+	}
+
+	o := os.Args[2]
+	y, err := strconv.Atoi(os.Args[3])
+	if err != nil {
+		fmt.Println("неправильный ввод\nпример:\n2 + 5")
+		return
 	}
 	fmt.Printf("%d %s %d = ", x, o, y)
 	switch o {
@@ -38,12 +32,18 @@ loop:
 	case "*":
 		fmt.Println(x * y)
 	case "/":
-		if x == 0 {
-			fmt.Println("делить на ноль нельзя")
-			goto loop
+		if y == 0 {
+			fmt.Println("\nделить на ноль нельзя")
+			return
 		}
 		fmt.Println(x / y)
 	case "%":
+		if y == 0 {
+			fmt.Println("\nделить по модулю на ноль нельзя")
+			return
+		}
 		fmt.Println(x % y)
+	default:
+		fmt.Println("\nнеправильный ввод:\nвторым пишите оператор")
 	}
 }
