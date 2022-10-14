@@ -6,14 +6,14 @@ import (
 )
 
 func main() {
-  var num1 float64
+	var num1 float64
 	var num2 float64
 	var operator string
-  fmt.Print("Enter the first number: ")
+	fmt.Print("Enter the first number: ")
 	fmt.Scanln(&num1)
 	fmt.Print("Enter an operator (+, -, *, /, %, ?, ^): ")
 	fmt.Scanln(&operator)
-  fmt.Print("Enter the second number: ")
+	fmt.Print("Enter the second number: ")
 	fmt.Scanln(&num2)
 	calculate(num1, num2, operator)
 }
