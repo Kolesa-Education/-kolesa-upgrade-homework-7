@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -9,12 +10,20 @@ func main() {
 	var operator string
 
 	fmt.Print("Enter the first number : ")
-	fmt.Scanln(&number1)
+	_, err := fmt.Scanln(&number1)
+	if err != nil {
+		fmt.Println("Not a number, please enter number for the first value")
+		return
+	}
 
 	fmt.Print("Enter the second number : ")
-	fmt.Scanln(&number2)
+	_, err = fmt.Scanln(&number2)
+	if err != nil {
+		fmt.Print("Not a number, please enter number for the second value")
+		return
+	}
 
-	fmt.Print("Enter the Operator (+ - * / > < =) : ")
+	fmt.Print("Enter the Operator (+ - * / > < = ^ %) : ")
 	fmt.Scanln(&operator)
 
 	switch operator {
@@ -55,6 +64,14 @@ func main() {
 			fmt.Println("False, ", number1, "≠", number2)
 
 		}
+
+	case "^":
+		fmt.Printf("%.2f", math.Pow(number1, number2))
+		break
+
+	case "%":
+		fmt.Printf("%.2f", float64(int(number1)%int(number2)))
+		break
 
 	default:
 		fmt.Println("Wrong operator, put correct values everywhere")
