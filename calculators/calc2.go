@@ -1,49 +1,65 @@
 package calculators
 
-import "fmt"
-
-type tokenType int
-
-const (
-	leftParent  tokenType = iota // (
-	rightParent                  // )
-	minus                        // -
-	plus                         // +
-	slash                        // "/"
-	star                         // '*'
-	number                       // 123, 9, 10
-	eof                          // end token type
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
-type token struct {
-	TkType  tokenType
-	Lexeme  string
-	Literal interface{}
-}
-
-type scanner struct {
-	exp     string
-	runes   []rune   // the chars in the expression
-	tokens  []*token // the tokens collected from expression
-	start   int      // scan start from
-	current int      // current scan index
-}
-
-func newScanner(exp string) *scanner {
-	return &scanner{
-		exp:    exp,
-		runes:  []rune(exp),
-		tokens: make([]*token, 0, 10),
+func evalrpn(tks []string) {
+	var (
+		nums []float64
+		x    float64
+	)
+	pop := func() float64 {
+		n := len(nums) - 1
+		t := nums[n]
+		nums = nums[:n]
+		return t
+	}
+	defer func() {
+		if recover() == nil && len(nums) == 1 {
+			fmt.Println(x)
+		} else {
+			fmt.Println("error")
+		}
+	}()
+	for _, tk := range tks {
+		switch tk {
+		case "+":
+			x = pop() + pop()
+		case "*":
+			x = pop() * pop()
+		case "-":
+			x = pop()
+			x = pop() - x
+		case "/":
+			x = pop()
+			x = pop() / x
+		default:
+			var e error
+			x, e = strconv.ParseFloat(tk, 64)
+			if e != nil {
+				panic(0)
+			}
+		}
+		nums = append(nums, x)
 	}
 }
 
-type DivZero struct{}
-
-func (myerr *DivZero) Error() string {
-	return "Cannot divide by 0!"
-}
-
-func Calc2(text string) {
-
+func Calc2(input string) {
 	fmt.Println("Enter expression you want to calculate")
+
+	stdin := bufio.NewReader(os.Stdin)
+	for {
+		s, e := stdin.ReadString('\n')
+		if e != nil {
+			break
+		}
+		if tks := strings.Fields(s); len(tks) > 0 {
+			evalrpn(tks)
+		}
+	}
 }

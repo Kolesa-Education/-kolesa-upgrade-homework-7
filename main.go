@@ -17,10 +17,9 @@ func main() {
 	input = scanner.Text()
 
 	if input == "1" {
-		scanner.Scan()
 		calculators.Calc1(scanner.Text())
 	} else if input == "2" {
-		scanner.Scan()
+		fmt.Println("Complex(2) calculator example: 1+3*(1+2/1-(2-1))")
 		calculators.Calc2(scanner.Text())
 	} else {
 		println("Try again! Choose 1 or 2")

@@ -15,30 +15,36 @@ func Divide(num1, num2 float64) (float64, error) {
 	return num1 / num2, nil
 }
 
-func Calc1(text string) {
+func Calc1(input string) {
 	var num1, num2 float64
 	var operator string
 
 	fmt.Print("Enter the first number: ")
 	fmt.Scanln(&num1)
 
-	fmt.Print("Enter the operator ( + - * / % **): ")
+	fmt.Print("Enter the operator ( + - * / % ** ): ")
 	fmt.Scanln(&operator)
 
 	fmt.Print("Enter the second number: ")
 	fmt.Scanln(&num2)
 
+	_, err := fmt.Scan(&num1, &operator, &num2)
+	if err != nil {
+		fmt.Println("\nPlease enter a valid number: ")
+		return
+	}
+
 	result := 0.0
 	switch operator {
 	case "+":
 		result = num1 + num2
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
 	case "-":
 		result = num1 - num2
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
 	case "*":
 		result = num1 * num2
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
 	case "/":
 		result = num1 / num2
 		result, err := Divide(num1, num2)
@@ -51,7 +57,8 @@ func Calc1(text string) {
 			}
 			return
 		}
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
+
 	case "%":
 		result = math.Mod(num1, num2)
 		result, err := Divide(num1, num2)
@@ -64,10 +71,10 @@ func Calc1(text string) {
 			}
 			return
 		}
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
 	case "**":
 		result = math.Pow(num1, num2)
-		fmt.Printf("%g %s %g = %g", num1, operator, num2, result)
+		fmt.Printf("%.2f %s %.2f = %.2f", num1, operator, num2, result)
 	default:
 		fmt.Println("Invalid operator")
 	}
