@@ -1,3 +1,8 @@
+# Usage:
+```bash
+go run cmd/main.go
+```
+
 # kolesa-upgrade-homework-7
 Дедлайн: 14.10.22 пятница 23:59  
 Домашнее задание по Go
