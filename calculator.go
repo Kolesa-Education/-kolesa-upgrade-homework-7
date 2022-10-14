@@ -66,12 +66,10 @@ func main() {
 		}
 
 	case "^":
-		fmt.Printf("%.2f", math.Pow(number1, number2))
-		break
+		fmt.Print(number1, "^", number2, "=", math.Pow(number1, number2))
 
 	case "%":
-		fmt.Printf("%.2f", float64(int(number1)%int(number2)))
-		break
+		fmt.Print(number1, "%", number2, "=", float64(int(number1)%int(number2)))
 
 	default:
 		fmt.Println("Wrong operator, put correct values everywhere")
