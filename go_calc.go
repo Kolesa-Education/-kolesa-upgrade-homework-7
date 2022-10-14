@@ -10,27 +10,36 @@ type Input struct {
 	op   string
 }
 
-func getInput() Input {
+func getInput() (Input, error) {
 	var (
 		a, b float64
 		op   string
 	)
 
 	// Getting user input
-	_, err := fmt.Scan(&a, &op)
+	fmt.Print("Enter the first number: ")
+	_, err := fmt.Scan(&a)
 	if err != nil {
-		fmt.Println("An error occurred: ", err)
+		return Input{}, fmt.Errorf("invalid input %w", err)
+	}
+
+	fmt.Print("Enter the operator: ")
+	_, err = fmt.Scan(&op)
+	if err != nil {
+		return Input{}, fmt.Errorf("invalid input %w", err)
 	}
 
 	if op == "sqrt" || op == "√" {
-		return Input{a, 0, op}
+		return Input{a, 0, op}, nil
 	}
 
+	fmt.Print("Enter the second number: ")
 	_, err = fmt.Scan(&b)
 	if err != nil {
-		fmt.Println("An error occurred: ", err)
+		return Input{}, fmt.Errorf("invalid input %w", err)
 	}
-	return Input{a, b, op}
+
+	return Input{a, b, op}, nil
 }
 
 func calc(a float64, b float64, op string) (float64, error) {
@@ -58,7 +67,10 @@ func isInt(num float64) bool {
 }
 
 func main() {
-	in := getInput()
+	in, err := getInput()
+	if err != nil {
+		fmt.Println("An error occurred: ", err)
+	}
 	a, b, op := in.a, in.b, in.op
 
 	// Calculating result
@@ -70,9 +82,9 @@ func main() {
 	// Checking if the result is integer
 	resStr := fmt.Sprintf("%.2f", res)
 	if isInt(res) {
-		var intRes int = int(res)
+		var intRes = int(res)
 		resStr = fmt.Sprintf("%d", intRes)
 	}
 
-	fmt.Println(resStr)
+	fmt.Println("Result:", resStr)
 }
