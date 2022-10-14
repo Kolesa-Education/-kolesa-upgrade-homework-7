@@ -1,7 +1,6 @@
 package calc
 
 import (
-	"fmt"
 	"kolesa-upgrade-homework-7/internal/parser"
 	"log"
 	"math"
@@ -43,7 +42,7 @@ func Calculate(tokens []parser.Token) float64 {
 			}
 		}
 	}
-	fmt.Println(len(stack))
+
 	res, _ := PopFloatStack(stack)
 
 	return res

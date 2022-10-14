@@ -19,32 +19,32 @@ func IsOperand(r rune) bool {
 	return regOp.MatchString(string(r))
 }
 
-//func ValidTokens(tokens []Token) bool {
-//	countParath := 0
-//	prevOp := ""
-//
-//	for _, token := range tokens {
-//		if token.Type == NUM {
-//			prevOp = ""
-//			continue
-//		}
-//		if token.Value == "(" {
-//			countParath++
-//		} else if token.Value == ")" {
-//			countParath--
-//		}
-//
-//		if token.Value == "+" || token.Value == "-" || token.Value == "*" || token.Value == "/" ||
-//			token.Value == "^" || token.Value == ")" {
-//			if prevOp != ")" && prevOp != "" {
-//				return false
-//			}
-//		}
-//		prevOp = token.Value
-//	}
-//
-//	if countParath != 0 {
-//		return false
-//	}
-//	return true
-//}
+func ValidTokens(tokens []Token) bool {
+	countScope := 0
+	prevOp := ""
+
+	for _, token := range tokens {
+		if token.Type == NUM {
+			prevOp = ""
+			continue
+		}
+		if token.Value == "(" {
+			countScope++
+		} else if token.Value == ")" {
+			countScope--
+		}
+
+		if token.Value == "+" || token.Value == "-" || token.Value == "*" || token.Value == "/" ||
+			token.Value == "^" || token.Value == ")" {
+			if prevOp != ")" && prevOp != "" {
+				return false
+			}
+		}
+		prevOp = token.Value
+	}
+
+	if countScope != 0 {
+		return false
+	}
+	return true
+}

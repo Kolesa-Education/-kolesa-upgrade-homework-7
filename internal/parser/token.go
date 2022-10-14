@@ -3,8 +3,8 @@ package parser
 type tokenType int
 
 const (
-	NUM = iota //number
-	OP         //operand
+	NUM = iota //число
+	OP         //операнд
 )
 
 type Token struct {

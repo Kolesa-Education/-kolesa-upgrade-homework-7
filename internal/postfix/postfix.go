@@ -1,11 +1,10 @@
 package postfix
 
 import (
-	"fmt"
 	"kolesa-upgrade-homework-7/internal/parser"
 )
 
-var OperPrecedence = map[string]int{
+var OpPrecedence = map[string]int{
 	"+": 20,
 	"-": 20,
 	"*": 30,
@@ -21,18 +20,18 @@ func PostFix(tokens []parser.Token) []parser.Token {
 	topStackPrecedence := 0
 
 	for i := 0; i < len(tokens); i++ {
-		fmt.Println(tokens[i], topStackPrecedence)
+
 		if tokens[i].Type == parser.NUM {
 			resQueue = enqueue(resQueue, tokens[i])
 		} else if tokens[i].Type == parser.OP && len(opStack) == 0 {
 			opStack = Push(opStack, tokens[i])
-			topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
-		} else if tokens[i].Type == parser.OP && OperPrecedence[tokens[i].Value] > topStackPrecedence {
+			topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
+		} else if tokens[i].Type == parser.OP && OpPrecedence[tokens[i].Value] > topStackPrecedence {
 			opStack = Push(opStack, tokens[i])
-			topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
+			topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
 		} else if tokens[i].Type == parser.OP && tokens[i].Value == "(" {
 			opStack = Push(opStack, tokens[i])
-			topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
+			topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
 
 		} else if tokens[i].Type == parser.OP && tokens[i].Value == ")" {
 			var token parser.Token
@@ -45,25 +44,25 @@ func PostFix(tokens []parser.Token) []parser.Token {
 			}
 
 			if len(opStack) > 0 {
-				topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
+				topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
 			}
 
 		} else {
-			for OperPrecedence[tokens[i].Value] <= topStackPrecedence {
+			for OpPrecedence[tokens[i].Value] <= topStackPrecedence {
 				token, newStack := Pop(opStack)
 				opStack = newStack
 
 				resQueue = enqueue(resQueue, token)
 
 				if len(opStack) > 0 {
-					topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
+					topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
 				} else {
 					topStackPrecedence = 0
 				}
 			}
 
 			opStack = Push(opStack, tokens[i])
-			topStackPrecedence = OperPrecedence[opStack[len(opStack)-1].Value]
+			topStackPrecedence = OpPrecedence[opStack[len(opStack)-1].Value]
 		}
 
 	}
