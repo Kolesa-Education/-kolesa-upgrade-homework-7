@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
 )
 
 type Input struct {
@@ -70,6 +71,7 @@ func main() {
 	in, err := getInput()
 	if err != nil {
 		fmt.Println("An error occurred: ", err)
+		os.Exit(1)
 	}
 	a, b, op := in.a, in.b, in.op
 
@@ -77,6 +79,7 @@ func main() {
 	res, err := calc(a, b, op)
 	if err != nil {
 		fmt.Println("An error occurred: ", err)
+		os.Exit(1)
 	}
 
 	// Checking if the result is integer
