@@ -48,7 +48,11 @@ func calculate(first float64, second float64, operation string) (result float64)
 	case "-":
 		result = first - second
 	case "/":
-		result = first / second
+		if second == 0 {
+			fmt.Print("error")
+		} else {
+			result = first / second
+		}
 	case "%":
 		result = math.Remainder(first, second)
 
