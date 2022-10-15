@@ -6,13 +6,28 @@ import (
 )
 
 func Run() {
-	fmt.Print("For begin enter any value from the keyboard, to complete - 'exit': ")
+	fmt.Print("For begin enter any value from the keyboard, or 'expr' to enter expression, to complete - 'exit': ")
 	var cliOperator string
 
 	for fmt.Scanln(&cliOperator); cliOperator != "exit"; fmt.Scanln(&cliOperator) {
 		if cliOperator == "exit" {
 			return
 		}
+		if cliOperator == "expr" {
+			var expr string
+			fmt.Println("enter math expression")
+			fmt.Scanln(&expr)
+			res, err := calc.CalculateExpr(expr)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println(res)
+			fmt.Print("To continue enter any value from the keyboard, or 'expr' to enter expression, to complete - 'exit': ")
+			fmt.Scanln(cliOperator)
+			continue
+		}
+
 		var operand1 float32
 		var operand2 float32
 		var operator string
@@ -40,7 +55,7 @@ func Run() {
 		}
 		fmt.Println(res)
 
-		fmt.Print("To continue enter any value from the keyboard, to complete - 'exit': ")
+		fmt.Print("To continue enter any value from the keyboard, or 'expr' to enter expression, to complete - 'exit': ")
 		fmt.Scanln(cliOperator)
 	}
 }
