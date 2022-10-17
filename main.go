@@ -18,6 +18,7 @@ func main() {
 	fmt.Print("Enter operator: ")
 	_, err = fmt.Scanln(&operator)
 	if err != nil {
+		fmt.Print("Not valid operator")
 		return
 	}
 
