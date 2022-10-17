@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -14,27 +15,53 @@ func parseArguments(chars []string) (float64, float64, string, error) {
 	var num1, num2 float64
 	var nums []float64
 	var operator string
-
+	var fullNum string
+	i := 0
 	for _, char := range chars {
-		if char == " " {
+		c, _ := regexp.MatchString("[0-9]", char)
+		if c || char == "." {
+			fullNum += char
+			if i == len(chars)-1 {
+				num, err := strconv.ParseFloat(fullNum, 64)
+				if err != nil {
+					return 0.0, 0.0, "", errors.New("неправильный ввод!")
+				} else {
+					nums = append(nums, num)
+					fullNum = ""
+				}
+			}
 		} else {
-			num, err := strconv.ParseFloat(char, 64)
-			if err != nil {
-				operator += char
-			} else {
-				nums = append(nums, num)
+			if fullNum != "" {
+				num, err := strconv.ParseFloat(fullNum, 64)
+				if err != nil {
+					return 0.0, 0.0, "", errors.New("неправильный ввод!")
+				} else {
+					nums = append(nums, num)
+					fullNum = ""
+				}
+			}
+
+			if char != " " {
+				operator = char
 			}
 		}
+		i++
 	}
+
 	if len(nums) < 2 {
 		return 0.0, 0.0, "", errors.New("error: не хватает аргументов!")
+	}
+	if len(nums) > 2 {
+		return 0.0, 0.0, "", errors.New("error: too much аргументов!")
 	}
 	num1 = nums[0]
 	num2 = nums[1]
 	if operator == "" {
-		return 0.0, 0.0, "", errors.New("error: не хватает аргументов!")
+		return 0.0, 0.0, "", errors.New("error: не хватает оператора!")
 	}
-
+	if len(operator) > 1 {
+		return 0.0, 0.0, "", errors.New("error: слишком много операторов!")
+	}
 	return num1, num2, operator, nil
 }
 
@@ -68,7 +95,11 @@ func calculating(expression string) (float64, error) {
 			result = num2
 		}
 	default:
-		return 0.0, errors.New(operator + " не является оператором!")
+		if len(operator) > 1 {
+			return 0.0, errors.New("Слишком много аргументов!")
+		} else {
+			return 0.0, errors.New(operator + " не является оператором!")
+		}
 	}
 	return result, nil
 }
