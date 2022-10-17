@@ -56,6 +56,7 @@ func simple_calc(elements[] string){
 	}else{
 		fmt.Println("Ваше выражение не верное проверьте его еще раз")
 	}
+	
 }
 
 
