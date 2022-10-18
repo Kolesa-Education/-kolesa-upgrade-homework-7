@@ -5,18 +5,9 @@ import (
 	"strings"
 )
 
-var opMap = map[string]int{
-	"*": 2,
-	"/": 2,
-	"+": 1,
-	"-": 1,
-	"(": -1,
-	")": -1,
-}
-
-func CalculatePostfix() float64 {
+func CalculatePostfix(postfix []string, opMap map[string]int) float64 {
 	st_calc := []float64{}
-	for _, token := range tokens_postfix {
+	for _, token := range postfix {
 		if _, found := opMap[token]; found {
 			a := st_calc[len(st_calc)-1]
 			b := st_calc[len(st_calc)-2]
@@ -45,11 +36,21 @@ func CalculatePostfix() float64 {
 }
 
 func Calculate(expression string) (res float64) {
-	if !strings.ContainsAny(expression, "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz") {
-		Tokenize(expression)
-		InfixToPostfix()
-		res = CalculatePostfix()
+	blackList := "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+	if strings.ContainsAny(expression, blackList) {
+		return
 	}
+	var opMap = map[string]int{
+		"*": 2,
+		"/": 2,
+		"+": 1,
+		"-": 1,
+		"(": -1,
+		")": -1,
+	}
+	infix := Tokenize(expression, opMap)
+	postfix := InfixToPostfix(infix, opMap)
+	res = CalculatePostfix(postfix, opMap)
 	return
 
 }

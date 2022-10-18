@@ -1,26 +1,26 @@
 package internal
 
-var tokens_infix []string
+import "fmt"
 
-func Tokenize(expression string) {
-	temp := ""
+func Tokenize(expression string, opMap map[string]int) []string {
+	var infix []string
+	token := ""
 	for _, ch := range expression {
-		if (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') {
-			panic("Invalid expression")
-		}
 		if ch == ' ' || ch == '\n' {
 			continue
 		} else if _, found := opMap[string(ch)]; found { // v =value found == true
-			if temp != "" {
-				tokens_infix = append(tokens_infix, temp)
+			if token != "" {
+				infix = append(infix, token)
 			}
-			temp = ""
-			tokens_infix = append(tokens_infix, string(ch))
+			token = ""
+			infix = append(infix, string(ch))
 		} else {
-			temp += string(ch)
+			token += string(ch)
 		}
 	}
-	if temp != "" {
-		tokens_infix = append(tokens_infix, temp)
+	if token != "" {
+		infix = append(infix, token)
 	}
+	fmt.Println(infix)
+	return infix
 }
